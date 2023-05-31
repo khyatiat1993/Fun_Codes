@@ -1,0 +1,20 @@
+/*   Find User IP Using PHP  */
+function get_user_ip()
+{ 
+  // finding IP here
+  if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    $ip = $_SERVER['HTTP_CLIENT_IP'];
+  } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+  } else {
+    $ip = $_SERVER['REMOTE_ADDR'];
+  }
+  return $ip;
+}
+
+$user_ip = get_user_ip();
+// echo $user_ip;
+
+/*   query data to fetch users city from his IP   */
+$ip_data = @unserialize(file_get_contents('http://ip-api.com/php/'.$city_card_ip));
+$user_city = $ip_data['city'];
