@@ -1,0 +1,2 @@
+// Copy text to clip board using HTML / JavaScript
+<button onclick="navigator.clipboard.writeText('text to copy to clip board);">Copy Me</button>
