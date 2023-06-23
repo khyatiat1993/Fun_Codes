@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Youtube Video API - Play multiple videos in loop</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Youtube Video API - Play multiple videos in loop">
+    <meta name="keywords" content="Youtube Video API, Loop Videos By Id, Loop Videos By URL, Play Video in Loops, JavaScript">
+    <meta name="author" content="Khyati Tankariya">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body style="text-align: center;">
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div style="color: red;">This video links are random from youtube, i do not have any concern to disrispect or manipulate any content, if you have any issue regarding use of video, please connect with me via LinkedIn <a href="https://www.linkedin.com/in/khyati-t-82080074/" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"></path></svg></a></div>
+    <hr>
+
+    <div id="player"></div>
+
+    <script>
+      // Initializing Counter to keep count on currently playing video
+      var counter = 0;
+      // Create array for all the video url, you can also create array with video id only for youtube videos
+      var player_video_arr = new Array('https://www.youtube.com/embed/lyRPyRKHO8M', 'https://www.youtube.com/embed/VwVg9jCtqaU', 'https://www.youtube.com/embed/DTy85XUS5Ac?controls=0');
+
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: 'lyRPyRKHO8M',
+          playerVars: {
+            'playsinline': 1,
+          },
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if(event.data==0){     //when video ends event.data becomes 0 
+
+          // Increment counter by 1 each time video ends to pont to next video in the array/loop
+          counter++;
+          // currently playlists are not working with this method, so we are working with single video ID & URL
+          // if(player_video_arr[counter].includes("list")){
+          //   console.log('list');
+          //     player.loadPlaylist(player_video_arr[counter]);
+          // }
+          // else{
+          //  console.log('video');
+          //Load video by id
+          //player.loadVideoById(player_video_arr[counter]);
+          // Load video by URL
+          player.loadVideoByUrl(player_video_arr[counter]);
+          //}
+          //event.target.playVideo();
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+    </script>
+  </body>
+</html>
