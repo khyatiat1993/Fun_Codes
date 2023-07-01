@@ -1,0 +1,33 @@
+<!Doctype html>
+<html>
+  <head>
+    <title>Live Search Using HTML, CSS & JavaScript</title>
+    <meta name="keywords" description="HTML, CSS, JavaScript, LiveSearch, FunCode">
+  </head>
+  <body>
+    <section>
+      <fieldset>
+        <legend>Choose your Coding Language:</legend>
+        <input type="search" placeholder="Search" oninput="searchMyLanguage(this.value)">
+        <br/>
+        <ul id="result"></ul>
+      </fieldset>
+    </section>
+    <script>
+        var result = document.querySelector("#result");
+        function searchMyLanguage(query){
+          if(query.length > 0){
+            query = query.toLowerCase();
+            result.innerHTML="";
+            let results = CodingLanguage.filter(el => el.toLowerCase().indexOf(query) != -1);
+            results.forEach((data,index) => {
+              result.innerHTML += '<li>' + data + '</li>';
+            })
+          }else{
+            result.innerHTML="Enter Your Coding Language to Proceed Search...";
+          }         
+        }
+      var CodingLanguage = ['C', 'C++', 'JAVA', '.Net', 'PHP', 'Go', 'JavaScript', 'Objective C', 'Python', 'Ruby', 'Android', 'Scala', 'Perl'];
+    </script>
+  </body>
+</html>
